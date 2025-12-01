@@ -1,11 +1,11 @@
 import { PraticienModel, IPraticienDocument} from '../models/Praticien';
 import { ICreatePraticien } from '../models/interfaces/IPraticien';
 /**
- * Service pour gérer la logique métier des utilisateurs
+ * Service pour gérer la logique métier des praticiens
  */
 export class PraticienService {
   /**
-   * Créer un nouvel visiteur
+   * Créer un nouvel praticien
    */
   public async createPraticien(praticienData: ICreatePraticien): Promise<IPraticienDocument> {
     try {

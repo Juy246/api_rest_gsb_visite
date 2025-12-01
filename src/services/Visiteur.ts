@@ -1,7 +1,7 @@
 import { VisiteurModel, IVisiteurDocument} from '../models/Visiteur';
 import { ICreateVisiteur } from '../models/interfaces/IVisiteur';
 /**
- * Service pour gérer la logique métier des utilisateurs
+ * Service pour gérer la logique métier des visiteurs
  */
 export class VisiteurService {
   /**

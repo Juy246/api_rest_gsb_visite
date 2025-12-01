@@ -1,5 +1,5 @@
 /**
- * Interface représentant un utilisateur
+ * Interface représentant un visiteur
  */
 export interface IVisiteur {
   _id?: string;
@@ -12,7 +12,7 @@ export interface IVisiteur {
 
 
 /**
- * Interface pour la création d'un utilisateur
+ * Interface pour la création d'un visiteur
  */
 export interface ICreateVisiteur {
   nom: string;
