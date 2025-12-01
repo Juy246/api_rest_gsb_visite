@@ -1,12 +1,12 @@
 import mongoose, { Schema, Model, Document } from 'mongoose';
-import { IUser } from './interfaces/IUser';
+import { IVisiteur } from './interfaces/IVisiteur';
 
 
-export type IUserDocument = IUser & Document;
+export type IVisiteurDocument = IVisiteur & Document;
 /**
- * Schéma Mongoose pour User
+ * Schéma Mongoose pour Visiteur
  */
-const userSchema = new Schema<IUserDocument>(
+const visiteurSchema = new Schema<IVisiteurDocument>(
   {
     nom: {
       type: String,
@@ -27,6 +27,7 @@ const userSchema = new Schema<IUserDocument>(
       required: [true, 'Le numéro de téléphone est obligatoire'],
       trim: true,
       unique: true,
+      match: [/^[0-9]{10}$/, 'Le numéro de téléphone doit contenir 10 chiffres']
     },
     email: {
       type: String,
@@ -38,15 +39,16 @@ const userSchema = new Schema<IUserDocument>(
     },
     dateEmbauche: {
       type: Date,
-      default: Date.now
+      default: Date.now,
+      required: true
     }
   },
   {
-    versionKey: false
+    timestamps: false
   }
 );
 
 
 
 
-export const UserModel: Model<IUserDocument> = mongoose.model<IUserDocument>('User', userSchema);
+export const VisiteurModel: Model<IVisiteurDocument> = mongoose.model<IVisiteurDocument>('Visiteur', visiteurSchema);

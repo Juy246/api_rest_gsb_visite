@@ -2,7 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { Database } from './config/database';
-import { UserRoutes } from './routes/User';
+import { VisiteurRoutes } from './routes/Visiteur';
 
 
 // Chargement des variables d'environnement
@@ -69,9 +69,9 @@ class App {
       });
     });
 
-      // Routes utilisateurs
-    const userRoutes = new UserRoutes();
-    this.app.use('/api/visiteur', userRoutes.router);
+      // Routes visiteurs
+    const visiteurRoutes = new VisiteurRoutes();
+    this.app.use('/api/visiteur', visiteurRoutes.router);
     
   }
 
