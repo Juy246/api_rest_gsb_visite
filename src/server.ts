@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { Database } from './config/database';
 import { VisiteurRoutes } from './routes/Visiteur';
 import { PraticienRoutes } from './routes/Praticien';
+import { MotifRoutes } from './routes/Motif';
 
 
 // Chargement des variables d'environnement
@@ -77,6 +78,10 @@ class App {
     // Routes praticiens
     const praticienRoutes = new PraticienRoutes();
     this.app.use('/api/praticien', praticienRoutes.router);
+
+    // Routes motifs
+    const motifRoutes = new MotifRoutes();
+    this.app.use('/api/motif', motifRoutes.router);
     
   }
 
