@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { Database } from './config/database';
 import { VisiteurRoutes } from './routes/Visiteur';
+import { PraticienRoutes } from './routes/Praticien';
 
 
 // Chargement des variables d'environnement
@@ -72,6 +73,10 @@ class App {
       // Routes visiteurs
     const visiteurRoutes = new VisiteurRoutes();
     this.app.use('/api/visiteur', visiteurRoutes.router);
+
+    // Routes praticiens
+    const praticienRoutes = new PraticienRoutes();
+    this.app.use('/api/praticien', praticienRoutes.router);
     
   }
 
