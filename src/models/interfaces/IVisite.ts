@@ -10,9 +10,9 @@ export interface IVisite {
     _id?: string;
     date_visite: Date;
     commentaire: string;
-    visiteur: IVisiteur;
-    praticien: IPraticien;
-    motif: IMotif;
+    visiteur: IVisiteur; // visiteurId: Types.ObjectId;
+    praticien: IPraticien; // praticienId: Types.ObjectId;
+    motif: IMotif; // motifId: Types.ObjectId;
 }
 
 /**

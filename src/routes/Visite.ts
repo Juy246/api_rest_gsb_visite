@@ -16,14 +16,14 @@ export class VisiteRoutes {
 
   private initializeRoutes(): void {
     // POST /api/visite - Créer une visite
-    this.router. post('/', this. visiteController.  createVisite);
+    this.router.post('/', this.visiteController.createVisite);
     // GET /api/visite - Récupérer toutes les visites
-    this.router.get('/', this.visiteController.  getAllVisites);
+    this.router.get('/', this.visiteController.getAllVisites);
     // GET /api/visite/visiteur/:visiteurId - Récupérer les visites d'un visiteur
     this.router.get('/visiteur/:visiteurId', this.visiteController.getVisitesByVisiteur);
     // GET /api/visite/praticien/:praticienId - Récupérer les visites d'un praticien
-    this.router.get('/praticien/:praticienId', this.visiteController. getVisitesByPraticien);
+    this.router.get('/praticien/:praticienId', this.visiteController.getVisitesByPraticien);
     // GET /api/visite/:id - Récupérer une visite par ID
-    this. router.get('/:id', this.visiteController.  getVisiteById);
+    this.router.get('/:id', this.visiteController.getVisiteById);
   }
 }

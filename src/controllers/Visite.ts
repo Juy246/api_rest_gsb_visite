@@ -12,6 +12,7 @@ export class VisiteController {
    * POST /api/visite - Créer une visite
    */
   public createVisite = async (req: Request, res: Response): Promise<void> => {
+    console.log('Données reçues pour la création: ', req.body); // Log à verifier les données reçues
     try {
       const visite = await this.visiteService. createVisite(req.body);
 

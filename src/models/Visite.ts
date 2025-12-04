@@ -38,4 +38,8 @@ const visiteSchema = new Schema<IVisiteDocument>(
   }
 );
 
+//index sur visiteurID et praticienID pour optimiser les recherches
+visiteSchema.index({ visiteur: 1});
+visiteSchema.index({ praticien: 1});
+
 export const VisiteModel: Model<IVisiteDocument> = mongoose.model<IVisiteDocument>('Visite', visiteSchema);
