@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 /**
  * Interface représentant un visiteur
  */
@@ -8,6 +10,7 @@ export interface IVisiteur {
   tel: string;
   email: string;
   dateEmbauche?: Date;
+  visites?: Types.ObjectId[];
 }
 
 

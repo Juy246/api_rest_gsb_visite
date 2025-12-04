@@ -36,6 +36,7 @@ export class VisiteurService {
     public async getAllVisiteurs(): Promise<IVisiteurDocument[]> {
           try {
       const visiteurs = await VisiteurModel.find()
+        .populate('visites')
         .sort({ dateCreation: -1 })
         .exec();
       return visiteurs;

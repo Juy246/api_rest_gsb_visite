@@ -44,11 +44,18 @@ const visiteurSchema = new Schema<IVisiteurDocument>(
     }
   },
   {
-    timestamps: false
+    timestamps: true,
+    versionKey: false,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
   }
 );
 
-
+visiteurSchema.virtual('visites', {
+      ref: 'Visite',
+      localField: '_id',
+      foreignField: 'visiteurId',
+    })
 
 
 export const VisiteurModel: Model<IVisiteurDocument> = mongoose.model<IVisiteurDocument>('Visiteur', visiteurSchema);

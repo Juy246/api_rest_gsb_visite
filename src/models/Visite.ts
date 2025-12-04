@@ -28,7 +28,7 @@ const visiteSchema = new Schema<IVisiteDocument>(
       required: [true, 'Le praticien est obligatoire']
     },
     motif: {
-      type: Schema.Types. ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Motif',
       required: [true, 'Le motif est obligatoire']
     }
