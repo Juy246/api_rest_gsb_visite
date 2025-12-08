@@ -71,4 +71,37 @@ export class VisiteurController {
     }
   };
 
+  /**
+   * POST /api/visiteur/portefeuille/:visiteurId - Ajouter un praticien au portefeuille
+   * Body: { praticienId: string }
+   */
+  public addToPortefeuille = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { visiteurId } = req.params;
+      const { praticienId } = req.body;
+
+      if (!praticienId) {
+        res.status(400).json({
+          success: false,
+          message: "L'id de praticien est obligatoire"
+        });
+        return;
+      }
+
+      const visiteur = await this.visiteurService.addToPortefeuille(visiteurId, praticienId);
+
+        res.status(200).json({
+          success: true,
+          message: 'Praticien ajouté au portefeuille avec succès',
+          data: visiteur
+        });
+      } 
+      catch (error: any) {
+        res.status(400).json({
+          success: false,
+          message: error.message || "Erreur lors de l'ajout au portefeuille"
+        });
+    }
+  };
+
 }

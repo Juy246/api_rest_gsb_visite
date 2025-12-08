@@ -41,6 +41,14 @@ const visiteurSchema = new Schema<IVisiteurDocument>(
       type: Date,
       default: Date.now,
       required: true
+    },
+    portefeuille: {
+      type: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Praticien'
+      }],
+      default: [],
+      required: false
     }
   },
   {

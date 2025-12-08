@@ -1,5 +1,6 @@
 import { VisiteurModel, IVisiteurDocument} from '../models/Visiteur';
 import { ICreateVisiteur } from '../models/interfaces/IVisiteur';
+import { PraticienModel } from '../models/Praticien';
 /**
  * Service pour gérer la logique métier des visiteurs
  */
@@ -59,6 +60,44 @@ export class VisiteurService {
     } catch (error: any) {
       if (error.name === 'CastError') {
         throw new Error(`ID invalide: ${id}`);
+      }
+      throw error;
+    }
+  }
+
+  /**
+   * Ajouter un praticien au portefeuille du visiteur
+   * Utilise $addToSet pour éviter les doublons
+   */
+  public async addToPortefeuille(visiteurId: string, praticienId: string): Promise<IVisiteurDocument> {
+    try {
+      // Vérifier si le visiteur existe
+      const visiteur = await VisiteurModel.findById(visiteurId);
+      if (!visiteur) {
+        throw new Error(`Visiteur avec l'ID ${visiteurId} introuvable`);
+      }
+
+      // Vérifier si le praticien existe
+      const praticien = await PraticienModel.findById(praticienId);
+      if (!praticien) {
+        throw new Error(`Praticien avec l'ID ${praticienId} introuvable`);
+      }
+
+      // Ajouter avec $addToSet (évite les doublons)
+      const updatedVisiteur = await VisiteurModel.findByIdAndUpdate(
+        visiteurId,
+        { $addToSet: { portefeuille: praticienId } },
+        { new: true }
+      ). populate('portefeuille'). exec();
+
+      if (!updatedVisiteur) {
+        throw new Error('Erreur lors de la mise à jour du portefeuille');
+      }
+
+      return updatedVisiteur;
+    } catch (error: any) {
+      if (error. name === 'CastError') {
+        throw new Error('ID invalide');
       }
       throw error;
     }
