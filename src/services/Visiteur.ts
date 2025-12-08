@@ -103,4 +103,21 @@ export class VisiteurService {
     }
   }
 
+  /**
+   * Récupérer le portefeuille d'un visiteur
+   */
+  public async getPortefeuille(visiteurId: string): Promise<IVisiteurDocument['portefeuille']> {
+    try {
+      const visiteur = await VisiteurModel.findById(visiteurId).populate('portefeuille').exec();
+      if (!visiteur) {
+        throw new Error(`Visiteur introuvable`);
+      }
+      return visiteur.portefeuille;
+    } catch (error: any) {
+      if (error.name === 'CastError') {
+        throw new Error(`ID invalide`);
+      }
+      throw error;
+    }
+  }
 }

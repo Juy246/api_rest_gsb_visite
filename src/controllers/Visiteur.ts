@@ -104,4 +104,31 @@ export class VisiteurController {
     }
   };
 
+  /*
+  * GET /api/visiteur/portefeuille/:visiteurId - Récupérer le portefeuille d'un visiteur
+  */
+  public getPortefeuille = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { visiteurId } = req.params;
+
+      const visiteur = await this.visiteurService.getVisiteurById(visiteurId);
+      if (!visiteur) {
+        res.status(404).json({
+          success: false,
+          message: `Visiteur introuvable`
+        });
+        return;
+      }
+      
+      res.status(200).json({
+        success: true,
+        data: visiteur.portefeuille
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: error.message || "Erreur lors de la récupération du portefeuille"
+      });
+    }
+  };
 }
