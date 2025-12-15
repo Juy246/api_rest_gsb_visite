@@ -1,12 +1,15 @@
 import { Request, Response } from 'express';
 import { VisiteurService } from '../services/Visiteur';
+import { PortefeuilleService } from '../services/Portefeuille';
 
 
 export class VisiteurController {
   private visiteurService: VisiteurService;
+  private portefeuilleService: PortefeuilleService;
 
   constructor() {
     this.visiteurService = new VisiteurService();
+    this.portefeuilleService = new PortefeuilleService();
   }
 
 
@@ -71,4 +74,47 @@ export class VisiteurController {
     }
   };
 
+  /**
+   * POST /api/visiteur/:id/portefeuille - Ajouter un praticien au portefeuille d'un visiteur
+   */
+  public addPraticienToPortefeuille = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const visiteurId = req.params.id;
+      const praticienId = req.body.praticienId;
+
+      const portefeuille = await this.portefeuilleService.addPraticienToPortefeuille(visiteurId, praticienId);
+      
+      res.status(201).json({
+        success: true,
+        message: 'Praticien ajouté au portefeuille avec succès',
+        data: portefeuille
+      });
+    } catch (error: any) {
+      res.status(400).json({
+        success: false,
+        message: error.message || 'Erreur lors de l\'ajout du praticien au portefeuille'
+      });
+    }
+  }
+
+  /**
+   * GET /api/visiteur/:id/portefeuille - Récupérer le portefeuille d'un visiteur
+   */
+  public getPortefeuilleByVisiteurId = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const visiteurId = req.params.id;
+
+      const portefeuille = await this.portefeuilleService.getPortefeuillesByVisiteurId(visiteurId);
+      
+      res.status(200).json({
+        success: true,
+        data: portefeuille
+      });
+    } catch (error: any) {
+      res.status(400).json({
+        success: false,
+        message: error.message || 'Erreur lors de la récupération du portefeuille'
+      });
+    }
+  }
 }
