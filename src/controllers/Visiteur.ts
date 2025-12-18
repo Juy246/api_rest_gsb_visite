@@ -82,7 +82,11 @@ export class VisiteurController {
       const visiteurId = req.params.id;
       const praticienId = req.body.praticienId;
 
-      const portefeuille = await this.portefeuilleService.addPraticienToPortefeuille(visiteurId, praticienId);
+      const portefeuille = await this.portefeuilleService.addPraticienToPortefeuille({
+        visiteur: visiteurId,
+        praticien: praticienId,
+        dateDebutSuivi: new Date()
+      });
       
       res.status(201).json({
         success: true,
@@ -115,6 +119,17 @@ export class VisiteurController {
         success: false,
         message: error.message || 'Erreur lors de la récupération du portefeuille'
       });
+    }
+  }
+
+  // DELETE /visiteurs/:visiteurId/portefeuille/:praticienId
+  public deletePraticienById = async (req: Request, res: Response) => {
+    try {
+      const { visiteurId, praticienId } = req.params;
+      await this.portefeuilleService.deletePraticienById(visiteurId, praticienId);
+      res.status(204).send();
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
     }
   }
 }

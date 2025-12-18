@@ -10,21 +10,22 @@ const portefeuilleSchema = new Schema<IPortefeuilleDocument>(
   {
     dateDebutSuivi: {
       type: Date,
+      default: Date.now,
       required: [true, 'La date de début de suivi est obligatoire']
     },
     dateFinSuivi: {
       type: Date,
       required: false
     },
-    visiteurId: {
+    visiteur: {
       type: Schema.Types.ObjectId,
       ref: 'Visiteur',
-      required: [true, 'Le visiteur est obligatoire']
+      required: [true, "L'Id du visiteur est obligatoire"]
     },
-    praticienId: {
+    praticien: {
       type: Schema.Types.ObjectId,
       ref: 'Praticien',
-      required: [true, 'Le praticien est obligatoire']
+      required: [true, "L'Id du praticien est obligatoire"]
     }
   },
   {
@@ -41,5 +42,8 @@ portefeuilleSchema.virtual('visites', {
       foreignField: 'portefeuilleId',
     })
 
+    // Index sur visiteurId et praticienId pour optimiser les recherches
+portefeuilleSchema.index({ visiteurId: 1, dateDebutSuivi: -1 });
+portefeuilleSchema.index({ praticienId: 1, dateDebutSuivi: -1 });
 
 export const PortefeuilleModel: Model<IPortefeuilleDocument> = mongoose.model<IPortefeuilleDocument>('Portefeuille', portefeuilleSchema);

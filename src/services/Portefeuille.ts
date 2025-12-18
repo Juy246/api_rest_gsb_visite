@@ -7,20 +7,24 @@ export class PortefeuilleService {
   /**
    * Créer un nouveau portefeuille
    */
-  public async addPraticienToPortefeuille(visiteurId: string, praticienId: string): Promise<IPortefeuilleDocument> {
+  public async addPraticienToPortefeuille(data: ICreatePortefeuille): Promise<IPortefeuilleDocument> {
     try {
         // Vérifier si le portefeuille existe déjà pour le même visiteur et praticien
-        const existingPortefeuille = await PortefeuilleModel.findOne({ 
-            visiteurId: visiteurId, 
-            praticienId: praticienId 
+        const existPortefeuille = await PortefeuilleModel.findOne({ 
+            visiteurId: data.visiteur, 
+            praticienId: data.praticien
         });
        
-        if (existingPortefeuille) {
-          throw new Error(`Un portefeuille pour le visiteur ${visiteurId} et le praticien ${praticienId} existe déjà`);
+        if (existPortefeuille) {
+          throw new Error(`Ce praticien est déjà dans le portefeuille de ce visiteur.`);
         }
 
         // Créer et sauvegarder le nouveau portefeuille
-        const portefeuille = new PortefeuilleModel({ visiteurId, praticienId });
+        const portefeuille = new PortefeuilleModel({ 
+          visiteur: data.visiteur, 
+          praticien: data.praticien, 
+          dateDebutSuivi: new Date() 
+        });
         await portefeuille.save();
         return portefeuille;
         } catch (error: any) {
@@ -39,14 +43,17 @@ export class PortefeuilleService {
      */
     public async getPortefeuillesByVisiteurId(visiteurId: string): Promise<IPortefeuilleDocument[]> {
       try {
-        const portefeuilles = await PortefeuilleModel.find({ visiteurId })
-          .populate('visiteurId')
+        const portefeuilles = await PortefeuilleModel.find({ visiteur: visiteurId })
+          .populate('praticien', 'nom prenom')
+          .sort({ createdAt: -1 })
+          .select('-createdAt -updatedAt -__v')
           .exec();
 
           if (!visiteurId){
             throw new Error(`Visiteur avec l'ID ${visiteurId} introuvable`);
           }
-        return portefeuilles;
+        console.log(portefeuilles);
+          return portefeuilles;
       } catch (error) {
         throw new Error('Erreur lors de la récupération des portefeuilles');
       }
@@ -55,5 +62,19 @@ export class PortefeuilleService {
     /**
      * Supprimer un portefeuille par son ID
      */
+    public async deletePraticienById(visiteurId: string, praticienId: string): Promise<void> {
+    try {
+      const result = await PortefeuilleModel.findOneAndDelete({
+        visiteur: visiteurId,
+        praticien: praticienId
+      });
+
+      if (!result) {
+        throw new Error('Lien introuvable dans le portefeuille.');
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 
 }

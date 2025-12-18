@@ -1,3 +1,4 @@
+import { queryObjects } from 'v8';
 import { VisiteurModel, IVisiteurDocument} from '../models/Visiteur';
 import { ICreateVisiteur } from '../models/interfaces/IVisiteur';
 /**
@@ -36,7 +37,7 @@ export class VisiteurService {
     public async getAllVisiteurs(): Promise<IVisiteurDocument[]> {
           try {
       const visiteurs = await VisiteurModel.find()
-        .populate('visites')
+        .select('nom prenom tel email') // Exclure le champ _id, selectionner les champs necessaires
         .sort({ dateCreation: -1 })
         .exec();
       return visiteurs;
@@ -50,8 +51,10 @@ export class VisiteurService {
    */
   public async getVisiteurById(id: string): Promise<IVisiteurDocument | null> {
     try {
-      const visiteur = await VisiteurModel.findById(id).exec();
-     
+      const visiteur = await VisiteurModel.findById(id)
+      .select('nom prenom tel email -_id') // Exclure le champ _id, selectionner les champs necessaires
+      .exec();
+
       if (!visiteur) {
         throw new Error(`Visiteur avec l'ID ${id} introuvable`);
       }

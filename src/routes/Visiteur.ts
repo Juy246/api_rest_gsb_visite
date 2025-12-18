@@ -24,9 +24,13 @@ export class VisiteurRoutes {
     this.router.get('/', this.visiteurController.getAllVisiteurs);
     // GET /api/visiteur/:id - Récupérer un visiteur par ID
     this.router.get('/:id', this.visiteurController.getVisiteurById);
+
+    // -- Gestion du portefeuille --
     // POST /api/visiteur/:id/portefeuille - Ajouter un praticien au portefeuille d'un visiteur
     this.router.post('/:id/portefeuille', this.visiteurController.addPraticienToPortefeuille);
     // GET /api/visiteur/:id/portefeuille - Récupérer le portefeuille d'un visiteur
     this.router.get('/:id/portefeuille', this.visiteurController.getPortefeuilleByVisiteurId);
+    // DELETE /api/visiteur/:id/portefeuille/:praticienId - Supprimer un praticien du portefeuille d'un visiteur
+    this.router.delete('/:visiteurId/portefeuille/:praticienId', this.visiteurController.deletePraticienById);
   }
 }
