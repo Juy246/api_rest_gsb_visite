@@ -15,6 +15,7 @@ const portefeuilleSchema = new Schema<IPortefeuilleDocument>(
     },
     dateFinSuivi: {
       type: Date,
+      default: null,
       required: false
     },
     visiteur: {

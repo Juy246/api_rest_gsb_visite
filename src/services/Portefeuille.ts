@@ -52,7 +52,6 @@ export class PortefeuilleService {
           if (!visiteurId){
             throw new Error(`Visiteur avec l'ID ${visiteurId} introuvable`);
           }
-        console.log(portefeuilles);
           return portefeuilles;
       } catch (error) {
         throw new Error('Erreur lors de la récupération des portefeuilles');
@@ -77,4 +76,42 @@ export class PortefeuilleService {
     }
   }
 
+  /**
+   * Arreter la date de fin de suivi d'un praticien
+   */
+  public async stopSuiviPraticien(visiteurId: string, praticienId: string): Promise<void> {
+    try {
+      const updatedPortefeuille = await PortefeuilleModel.findOneAndUpdate({ 
+          visiteur: visiteurId, 
+          praticien: praticienId 
+        },
+        { dateFinSuivi: new Date() }
+      );
+
+      if (!updatedPortefeuille) {
+        throw new Error(`Portefeuille introuvable`);
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /*
+  * Recuperer le portefeuille de praticiens actifs d'un visiteur
+  */
+  public async getActivePortefeuilleByVisiteur(visiteurId: string): Promise<IPortefeuilleDocument[]> {
+    try {
+      const activePortefeuilles = await PortefeuilleModel.find({ 
+          visiteur: visiteurId, 
+          dateFinSuivi: null 
+        })
+        .populate('praticien', 'nom prenom')
+        .sort({ createdAt: -1 })
+        .select('-createdAt -updatedAt -__v')
+        .exec();
+      return activePortefeuilles;
+      } catch (error) {
+        throw new Error('Erreur lors de la récupération des portefeuilles');
+      }
+    }
 }

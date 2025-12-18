@@ -132,4 +132,34 @@ export class VisiteurController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  // PATCH /visiteurs/:id/portefeuille
+  public stopSuiviPraticien = async (req: Request, res: Response) => {
+    try {
+      const visiteurId = req.params.id;
+      const { praticienId } = req.body;
+      await this.portefeuilleService.stopSuiviPraticien(visiteurId, praticienId);
+      res.status(200).json({
+        success: true,
+        message: 'Suivi du praticien arrêté avec succès'
+        });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  // GET /visiteurs/:id/portefeuille/actif
+  public getActivePortefeuilleByVisiteur = async (req: Request, res: Response) => {
+    try {
+      const visiteurId = req.params.id;
+      const activePortefeuilles = await this.portefeuilleService.getActivePortefeuilleByVisiteur(visiteurId);
+      res.status(200).json({
+        success: true,
+        data: activePortefeuilles
+      });
+    }
+    catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }

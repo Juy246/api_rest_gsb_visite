@@ -32,5 +32,9 @@ export class VisiteurRoutes {
     this.router.get('/:id/portefeuille', this.visiteurController.getPortefeuilleByVisiteurId);
     // DELETE /api/visiteur/:id/portefeuille/:praticienId - Supprimer un praticien du portefeuille d'un visiteur
     this.router.delete('/:visiteurId/portefeuille/:praticienId', this.visiteurController.deletePraticienById);
+    // PATCH /api/visiteur/:id/portefeuille - Arreter le suivi d'un praticien dans le portefeuille d'un visiteur
+    this.router.patch('/:id/portefeuille', this.visiteurController.stopSuiviPraticien);
+    // GET /api/visiteur/:id/portefeuille/actif - Récupérer les portefeuilles actifs d'un visiteur
+    this.router.get('/:id/portefeuille/actif', this.visiteurController.getActivePortefeuilleByVisiteur);
   }
 }
