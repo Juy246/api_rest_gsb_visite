@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { VisiteurController } from '../controllers/Visiteur';
+import requestLimiter from '../middlewares/rateLimit';
 
 
 /**
@@ -21,7 +22,7 @@ export class VisiteurRoutes {
     // POST /api/visiteur - Créer un utilisateur
     this.router.post('/', this.visiteurController.createVisiteur);
     // GET /api/visiteur - Récupérer tous les visiteurs
-    this.router.get('/', this.visiteurController.getAllVisiteurs);
+    this.router.get('/', requestLimiter, this.visiteurController.getAllVisiteurs);
     // GET /api/visiteur/:id - Récupérer un visiteur par ID
     this.router.get('/:id', this.visiteurController.getVisiteurById);
   }
