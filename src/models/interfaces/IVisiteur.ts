@@ -21,4 +21,5 @@ export interface ICreateVisiteur {
   nom: string;
   prenom: string;
   email: string;
+  tel: string;
 }
