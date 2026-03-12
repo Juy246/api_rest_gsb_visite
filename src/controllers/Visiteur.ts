@@ -18,8 +18,19 @@ export class VisiteurController {
    */
   public createVisiteur = async (req: Request, res: Response): Promise<void> => {
     try {
-      const visiteur = await this.visiteurService.createVisiteur(req.body);
-     
+      console.log('Données reçues pour la création du visiteur:', req.body);
+      const {nom, prenom, email,tel,dateEmbauche} = req.body;
+
+      const visiteurData = {
+        nom,
+        prenom,
+        email,
+        tel,
+        dateEmbauche
+      };
+      console.log('Données du visiteur à créer:', visiteurData);
+      const visiteur = await this.visiteurService.createVisiteur(visiteurData);
+      
       res.status(201).json({
         success: true,
         message: 'Visiteur créé avec succès',

@@ -6,6 +6,7 @@ import { VisiteurRoutes } from './routes/Visiteur';
 import { PraticienRoutes } from './routes/Praticien';
 import { MotifRoutes } from './routes/Motif';
 import { VisiteRoutes } from './routes/Visite';
+import helmet from 'helmet';
 
 
 // Chargement des variables d'environnement
@@ -36,6 +37,9 @@ class App {
    * Configure les middlewares Express
    */
   private initializeMiddlewares(): void {
+    //Securiser les en-tetes HTTP
+    this.app.use(helmet());
+    
     // Parse le JSON dans les requêtes
     this.app.use(express.json());
    

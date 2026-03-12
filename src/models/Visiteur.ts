@@ -27,7 +27,7 @@ const visiteurSchema = new Schema<IVisiteurDocument>(
       required: [true, 'Le numéro de téléphone est obligatoire'],
       trim: true,
       unique: true,
-      match: [/^[0-9]{10}$/, 'Le numéro de téléphone doit contenir 10 chiffres']
+      match: [/^(\+33|0)[1-9](\d{2}){4}$/, 'Le numéro de téléphone français est invalide']
     },
     email: {
       type: String,
