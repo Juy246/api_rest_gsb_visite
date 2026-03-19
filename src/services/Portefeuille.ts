@@ -114,4 +114,12 @@ export class PortefeuilleService {
         throw new Error('Erreur lors de la récupération des portefeuilles');
       }
     }
+
+    public async countPraticienPortefeuilleByVisiteur(visiteurId: string): Promise<number> {
+      return PortefeuilleModel.countDocuments({ visiteur: visiteurId });
+    }
+
+    public async countActivePraticienPortefeuilleByVisiteur(visiteurId: string): Promise<number> {
+      return PortefeuilleModel.countDocuments({ visiteur: visiteurId, dateFinSuivi: null });
+    }
 }

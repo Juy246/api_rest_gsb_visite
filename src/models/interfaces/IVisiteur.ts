@@ -11,6 +11,8 @@ export interface IVisiteur {
   email: string;
   dateEmbauche?: Date;
   visites?: Types.ObjectId[];
+
+  isJunior: () => boolean;
 }
 
 
@@ -21,4 +23,5 @@ export interface ICreateVisiteur {
   nom: string;
   prenom: string;
   email: string;
+  tel: string;
 }
