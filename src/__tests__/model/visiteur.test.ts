@@ -14,7 +14,7 @@ describe('VisiteurModel.isJunior()', () => {
 		};
 	});
 
-    describe('Veirifie si un visiteur est junior', () => {
+    describe('Vérifie si un visiteur est junior', () => {
         test("retourne true si embauché il y a moins d'un an", () => {
             const visiteurJunior = new VisiteurModel({
                 ...visiteurData,
