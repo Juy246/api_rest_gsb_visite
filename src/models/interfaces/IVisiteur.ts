@@ -11,6 +11,8 @@ export interface IVisiteur {
   email: string;
   dateEmbauche?: Date;
   visites?: Types.ObjectId[];
+
+  isJunior: () => boolean;
 }
 
 

@@ -1,10 +1,10 @@
-jest.mock('../models/Visiteur');
+jest.mock('../../models/Visiteur');
 
 import { VisiteurService } from '../../services/Visiteur';
 import { VisiteurModel } from '../../models/Visiteur';
 import { ICreateVisiteur } from '../../models/interfaces/IVisiteur';
 
-describe('VisiteurService. createVisiteur', () => {
+describe('VisiteurService.createVisiteur', () => {
   let service: VisiteurService;
   let visiteurData: ICreateVisiteur;
 
