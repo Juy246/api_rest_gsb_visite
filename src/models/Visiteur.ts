@@ -41,6 +41,20 @@ const visiteurSchema = new Schema<IVisiteurDocument>(
       type: Date,
       default: Date.now,
       required: true
+    },
+    password: {
+      type: String,
+      required: [true, 'Le mot de passe est obligatoire'],
+      minlength: [12, 'Le mot de passe doit contenir au moins 12 caractères'],
+      validate: {
+        validator: function (value: string) {
+          return /[A-Z]/.test(value) && // Majuscule
+                 /[a-z]/.test(value) && // Minuscule
+                 /\d/.test(value) && // Chiffre
+                 /[!@#$%^&*(),.?":{}|<>]/.test(value); // Caractère spécial
+        },
+        message: 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial'
+      }
     }
   },
   {

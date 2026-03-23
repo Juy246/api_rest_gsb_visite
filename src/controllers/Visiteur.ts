@@ -173,4 +173,67 @@ export class VisiteurController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * POST /api/visiteur/signup - Créer un compte pour un visiteur
+   */
+  public creerUnCompte = async (req: Request, res: Response): Promise<void> => {
+    try {
+      console.log('Données reçues pour la création du visiteur:', req.body);
+    const { nom, prenom, email, password, tel, dateEmbauche } = req.body;
+   
+    const visiteurData = {
+      nom,
+      prenom,
+      email,
+      password,
+      tel,
+      dateEmbauche
+    };
+
+
+    console.log('Données du visiteur à créer:', visiteurData);
+
+
+      const visiteur = await this.visiteurService.creerUnCompte(visiteurData);
+     
+      res.status(201).json({
+        success: true,
+        message: 'Visiteur créé avec succès',
+        data: visiteur
+      });
+    } catch (error: any) {
+      res.status(400).json({
+        success: false,
+        message: error.message || 'Erreur lors de la création'
+      });
+    }
+  };
+
+/**
+ * POST /api/visiteur/login - Se connecter en tant que visiteur
+ */
+ public seConnecter = async (req: Request, res: Response): Promise<void> => {
+    try {
+      console.log('Données reçues pour la connexion du visiteur:', req.body);
+    const { email, password } = req.body;
+
+
+      const { token, visiteur } = await this.visiteurService.seConnecter(email, password);
+
+
+      res.status(200).json({
+        success: true,
+        message: 'Connexion réussie',
+        token,
+        data: visiteur
+      });
+    } catch (error: any) {
+      res.status(401).json({
+        success: false,
+        message: error.message || 'Erreur lors de la connexion'
+      });
+    }
+  };
+
 }
