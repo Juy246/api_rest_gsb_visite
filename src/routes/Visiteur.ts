@@ -3,6 +3,7 @@ import { VisiteurController } from '../controllers/Visiteur';
 import requestLimiter from '../middlewares/rateLimit';
 import { validateVisiteur } from '../validators/Visiteur';
 import { dataValidation } from '../middlewares/dataValidation';
+import { authMiddleware } from '../middlewares/auth';
 
 
 /**
@@ -24,7 +25,7 @@ export class VisiteurRoutes {
     // POST /api/visiteur - Créer un utilisateur
     this.router.post('/', requestLimiter, validateVisiteur, dataValidation, this.visiteurController.createVisiteur);
     // GET /api/visiteur - Récupérer tous les visiteurs
-    this.router.get('/', requestLimiter, this.visiteurController.getAllVisiteurs);
+    this.router.get('/', requestLimiter, authMiddleware, this.visiteurController.getAllVisiteurs);
     // GET /api/visiteur/:id - Récupérer un visiteur par ID
     this.router.get('/:id', this.visiteurController.getVisiteurById);
 
@@ -39,5 +40,11 @@ export class VisiteurRoutes {
     this.router.patch('/:id/portefeuille', this.visiteurController.stopSuiviPraticien);
     // GET /api/visiteur/:id/portefeuille/actif - Récupérer les portefeuilles actifs d'un visiteur
     this.router.get('/:id/portefeuille/actif', this.visiteurController.getActivePortefeuilleByVisiteur);
+
+    //-- Gestion de l'authentification --
+    // POST /api/visiteur/signup - Créer un compte pour un visiteur
+    this.router.post('/signup', requestLimiter, validateVisiteur, dataValidation, this.visiteurController.creerUnCompte);
+    // POST /api/visiteur/login - Se connecter en tant que visiteur
+    this.router.post('/login', requestLimiter, this.visiteurController.seConnecter);
   }
 }
