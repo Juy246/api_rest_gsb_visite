@@ -56,7 +56,7 @@ class App {
    */
   private initializeRoutes(): void {
     // Route de test
-    this.app.get('/', (req: Request, res: Response) => {
+    this.app.get('/', (_req: Request, res: Response) => {
       res.json({
         message: 'API REST GSB',
         version: '1.0.0',
@@ -68,7 +68,7 @@ class App {
 
 
     // Route de santé pour vérifier que l'API fonctionne
-    this.app.get('/health', (req: Request, res: Response) => {
+    this.app.get('/health', (_req: Request, res: Response) => {
       res.json({
         status: 'OK',
         timestamp: new Date().toISOString(),

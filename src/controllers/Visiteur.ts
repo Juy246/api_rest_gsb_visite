@@ -19,12 +19,13 @@ export class VisiteurController {
   public createVisiteur = async (req: Request, res: Response): Promise<void> => {
     try {
       console.log('Données reçues pour la création du visiteur:', req.body);
-      const {nom, prenom, email,tel,dateEmbauche} = req.body;
+      const {nom, prenom, email, password, tel, dateEmbauche} = req.body;
 
       const visiteurData = {
         nom,
         prenom,
         email,
+        password,
         tel,
         dateEmbauche
       };
@@ -47,7 +48,7 @@ export class VisiteurController {
   /**
  * GET /api/visiteurs - Récupérer tous les visiteurs
  */
-  public getAllVisiteurs = async (req: Request, res: Response): Promise<void> => {
+  public getAllVisiteurs = async (_req: Request, res: Response): Promise<void> => {
     try {
       const visiteurs = await this.visiteurService.getAllVisiteurs();
 

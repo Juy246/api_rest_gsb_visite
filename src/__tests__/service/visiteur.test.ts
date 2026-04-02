@@ -15,6 +15,7 @@ describe('VisiteurService.createVisiteur', () => {
     visiteurData = {
       nom: 'Dupont',
       prenom: 'Marie',
+      password: 'password123',
       email: 'marie.dupont@test.com',
       tel: '0612345678'
     };
