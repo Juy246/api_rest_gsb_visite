@@ -32,7 +32,7 @@ export class MotifController {
   /**
  * GET /api/motifs - Récupérer tous les motifs
  */
-  public getAllMotifs = async (req: Request, res: Response): Promise<void> => {
+  public getAllMotifs = async (_req: Request, res: Response): Promise<void> => {
     try {
       const motifs = await this.motifService.getAllMotifs();
       res.status(200).json({
@@ -44,7 +44,7 @@ export class MotifController {
     } catch (error: any) {
       res.status(500).json({
         success: false,
-        message: error.message || 'Erreur lors de la récupération des visiteurs'
+        message: error.message || 'Erreur lors de la récupération des motifs'
       });
     }
   };
